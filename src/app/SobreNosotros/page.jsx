@@ -2,7 +2,7 @@
 
 function SobreNosotros() {
   return (
-    <div>SobreNosotros</div>
+    <div>ESTA ES LA PAGINA SOBRE NOSOTROS</div>
   )
 }
 
