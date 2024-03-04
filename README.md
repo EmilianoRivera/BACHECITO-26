@@ -1,3 +1,17 @@
+<h1>Bienvenido!</h1>
+Somos el equipo de bachecito 26, bienvenido a nuestro repositorio, aquí encontraras el código fuente de nuestro proyecto web.
+<h2>Dependencias</h2>
+Lista de paquetes de npm:
+<ul>
+  <li> Aqui van los paquetes</li>
+</ul>
+
+
+<hr />
+Si quieres empezar a correr el proyecto, sigue los siguientes pasos
+<h1>Next</h1>
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
