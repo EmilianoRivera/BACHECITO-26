@@ -1,5 +1,4 @@
-import React from 'react'
-
+//aqui es la Landing Page
 function HomePage() {
   return (
     <div>Esta es la Landing PAGE</div>
