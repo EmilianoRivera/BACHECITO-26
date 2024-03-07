@@ -3,6 +3,7 @@
 //estas rutas son para la parte del desplegado de los reportes que hay en la bd
 import { NextResponse } from "next/server"
 
+
 export async function GET( request) {
     console.log(request)
     return NextResponse.json("SE HACE PETICION ")
