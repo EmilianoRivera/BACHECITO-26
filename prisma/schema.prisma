@@ -11,11 +11,144 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
-model NombreUsuario {
-  nomu_id  Int @id @default(autoincrement())
-  nomu_nombre String
-  nomu_appat String
-  nomu_apmat String
+//entre los dos modelos Nombre_del_administrador y Administrador hay una relación de 1 a 1 acorde al modelo que se hizo, entonces
+//para poder hacer esta relación la tabla de Administrador tiene que tener una llave foranea, la cual sera nomad_id, este campo
+//va a guardar el valor del id de la tabla Nombre_del_administrador. Por lo que el campo nomad_id que actua como FK
+//del modelo de Administrador y se hace referencia al campo de nomad_id de la tabla Nombre_del_administrador.
+
+//---------------------------------------------ESTOS MODELOS SON DEL ADMIN--------------------------------------------------------------------------//
+model Nombre_Administrador {
+  nomad_id     Int    @id @default(autoincrement())
+  nomad_nombre String
+  nomad_appat  String
+  nomad_apmat  String
+
+  //Aquí viene la relación con: Administrdor
+  administrador Administrdor? //NOTA! En esta parte basicamente se hace referencia a que no es obligatorio el campo Administrador  en Nombre_del_administrador, esto como tal esta mal porque si hay un nombre del admin, existe un admin, pero la forma de forzar esto es con el back
 }
+
+model Administrdor {
+  adm_id         Int      @id @default(autoincrement())
+  adm_contrasena String
+  adm_fechanac   DateTime
+  adm_correo     String
+  adm_token      Int
+
+  //Aqui esta la FK y viene la relación con: Nombre_Administrador, Usuarios_Baneados_temporalmente, Usuarios_Baneados_permanentemente, Reportes
+  nomad_id           Int                  @unique //esta es la FK de Administrador
+  datos_administador Nombre_Administrador @relation(fields: [nomad_id], references: [nomad_id])
+
+  usuarios_baneados_temporalmente Usuarios_Baneados_temporalmente[]
+
+  usuarios_baneados_permanentemente Usuarios_Baneados_permanentemente[]
+
+  reportes Reportes[]
+}
+
+//---------------------------------------------ESTOS MODELOS SON DEL USUARIO-------------------------------------------------------------------//
+model Nombre_Usuario {
+  nomu_id     Int    @id @default(autoincrement())
+  nomu_nombre String
+  nomu_appat  String
+  nomu_apmat  String
+
+  //Aqui viene la relación con: Usuario
+  usuario Usuario?
+}
+
+model Usuario {
+  usu_id            Int            @id @default(autoincrement())
+  usu_contrasena    String
+  usu_fechanac      DateTime
+  usu_correo        String
+  usu_estado_cuenta Boolean        @default(true) //true en este contexto significa que esta activa la cuenta
+  //Aqui esta la FK y viene la relación con: Nombre_Usuario, Usuarios_Baneados_temporalmente, Usuarios_Baneados_permanentemente, Reportes
+  nomu_id           Int            @unique
+  nombre_Usuario    Nombre_Usuario @relation(fields: [nomu_id], references: [nomu_id])
+
+  usuarios_baneados_temporalmente Usuarios_Baneados_temporalmente[]
+
+  usuarios_baneados_permanentemente Usuarios_Baneados_permanentemente?
+
+  reportes Reportes[]
+}
+
+//---------------------------------------------ESTOS MODELOS SON DEL BANEO DE CUENTAS------------------------------------------------------------//
+
+model Usuarios_Baneados_temporalmente {
+  ubt_id                 Int      @id @default(autoincrement())
+  ubt_motivo_de_baneo    String
+  ubt_fecha_de_baneo     DateTime
+  ubt_duracion_del_baneo DateTime
+  ubt_cantidad_de_baneos Int
+  //Aquí estan las FK y viene la relación con: Usuario, Administrdor
+
+  usu_id  Int     @unique
+  Usuario Usuario @relation(fields: [usu_id], references: [usu_id])
+
+  adm_id       Int          @unique
+  Administrdor Administrdor @relation(fields: [adm_id], references: [adm_id])
+}
+
+model Usuarios_Baneados_permanentemente {
+  ubp_id                      Int      @id @default(autoincrement())
+  ubp_motivo_de_baneo         String
+  ubp_fecha_de_baneo          DateTime
+  ubp_estado_baneo_permanente Boolean  @default(false) //false en este contexto significa que la cuenta no esta baneada permanentemente
+  //Aqui estan las FK y vienen las relaciones con: Usuario, Administrador
+
+  usu_id  Int     @unique
+  usuario Usuario @relation(fields: [usu_id], references: [usu_id])
+
+  adm_id        Int          @unique
+  administrador Administrdor @relation(fields: [adm_id], references: [adm_id])
+}
+
+//---------------------------------------------ESTOS MODELOS SON DE LOS REPORTES------------------------------------------------------------//
+
+model Reportes {
+  rep_id          Int    @id @default(autoincrement())
+  rep_ubicacion   String
+  rep_descripcion String
+  rep_imagenURL   String
+  //Aqui estan las FK y vienen las relaciones con: Administador, Usuario, Estado_reporte, Alcaldia 
+
+  adm_id       Int          @unique
+  administador Administrdor @relation(fields: [adm_id], references: [adm_id])
+
+  usu_id  Int     @unique
+  usuario Usuario @relation(fields: [usu_id], references: [usu_id])
+
+  estado_reporte Estado_reporte?
+
+  alcaldia Alcaldia[]
+}
+
+model Estado_reporte {
+  edo_id         Int    @id @default(autoincrement())
+  edo_reporte    String @unique
+  edo_pendiente  String @default("Sin atender")
+  edo_en_proceso String @default("En atención")
+  edo_resuelto   String @default("Atendido")
+  //Aqui esta la FK y viene la relacion con: Reportes
+
+  rep_id  Int      @unique
+  reporte Reportes @relation(fields: [rep_id], references: [rep_id])
+}
+
+//---------------------------------------------ESTE ES UN CATÁLOGO------------------------------------------------------------//
+
+model Alcaldia {
+  alc_id     Int    @id
+  alc_nombre String @unique
+
+  //Aqui esta la FK y viene la relacion con: Reportes
+  rep_id  Int      @unique
+  reporte Reportes @relation(fields: [rep_id], references: [rep_id])
+}
+
+//Este es el query para meter las alcaldias 
+//INSERT INTO Alcaldia (alc_id, nombre) VALUES (002, "Azcapotzalco"),(003, "Coyoacán"),(004, "Cuajimalpa de Morelos"),(005, "Gustavo A. Madero"),(006, "Iztacalco"),(007, "Iztapalapa"),(008, "La Magdalena Contreras"),(009, "Milpa Alta"),(010, "Álvaro Obregón"),(011, "Tláhuac"),(012, "Tlalpan"),(013, "Xochimilco"),(014, "Benito Juárez"),(015, "Cuauhtémoc"),(016, "Miguel Hidalgo"),(017, "Venustiano Carranza");
