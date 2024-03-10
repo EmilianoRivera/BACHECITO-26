@@ -1,9 +1,11 @@
-import React from 'react'
 
+import React  from "react";
 function Registro() {
   return (
-    <div>Pagina de Registro</div>
-  )
+    <div>
+     PAGINA DE REGISTRO
+    </div>
+  );
 }
 
-export default Registro
+export default Registro;
