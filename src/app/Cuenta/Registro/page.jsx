@@ -1,7 +1,10 @@
+
 "use client";
 import React, { useState } from 'react';
 import "./registro.css";
 
+
+import React  from "react";
 function Registro() {
   const [active, setActive] = useState(false);
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false); // Estado para controlar la visibilidad de la política de privacidad
@@ -30,6 +33,7 @@ function Registro() {
 
 
   return (
+
     <div className={`container ${active ? "active" : ""}`} id="container">
       <div className="form-container sign-up">
         <form id="form-registro">
@@ -84,6 +88,7 @@ function Registro() {
 
     </div>
     
+
   );
 }
 
