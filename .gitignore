@@ -26,7 +26,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # Ignorar archivos .env
-.env
+
 
 # Ignorar archivos .env* locales
 .env*.local
