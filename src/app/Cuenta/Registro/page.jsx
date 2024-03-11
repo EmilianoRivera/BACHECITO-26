@@ -3,8 +3,6 @@
 import React, { useState } from 'react';
 import "./registro.css";
 
-
-import React  from "react";
 function Registro() {
   const [active, setActive] = useState(false);
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false); // Estado para controlar la visibilidad de la política de privacidad
