@@ -2,25 +2,12 @@
 
 //estas rutas son para la parte del desplegado de los reportes que hay en la bd
 import { NextResponse } from "next/server"
-import  {prisma} from "@/libs/prisma";
+import { prisma } from "@/lib/prisma"; 
 
+//AQUI ENDPOINT PARA RETORNAR LOS REPORTES QUE ESTEN EN LA BD
 export async function GET( request) {
-    const usuarios = prisma.usuario.findMany();
+    const usuarios = prisma.estado_reporte.findMany()
 
     console.log(usuarios) 
     return NextResponse.json(usuarios)
-}
-
-export async function POST( request) {
-    const {nombre, appat, apmat} = await request.json()
-    console.log(nombre, appat, apmat)
-    const nuevoUsuario = await prisma.usuario.create({
-        data: {
-            nombre,
-            appat,
-            apmat
-        }
-    })
-    console.log("No llego" , nuevoUsuario)
-    return NextResponse.json(nuevoUsuario)
 }
