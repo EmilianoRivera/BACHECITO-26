@@ -4,10 +4,11 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"; 
 
-//AQUI ENDPOINT PARA RETORNAR LOS REPORTES QUE ESTEN EN LA BD
+
 export async function GET( request) {
-    const usuarios = prisma.estado_reporte.findMany()
+    const usuarios =await  prisma.estado_reporte.findMany()
 
     console.log(usuarios) 
     return NextResponse.json(usuarios)
 }
+
