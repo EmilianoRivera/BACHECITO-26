@@ -1,41 +1,70 @@
-import Link from "next/link";
+"use client";
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import './Navbar.css';
 
+
+//hay que corregir el menú de hamburguesa
 function Navbar() {
+  const [showMenu, setShowMenu] = useState(false);
+
+
+  useEffect(() => {
+    const handleResize = () => {
+      setShowMenu(window.innerWidth <= 30 * window.innerWidth / 100);
+    };
+
+
+    handleResize();
+
+
+    window.addEventListener('resize', handleResize);
+
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+
+  const toggleMenu = () => {
+    setShowMenu(!showMenu);
+  };
+
+
   return (
-    <nav className="bg-gray-800 p-4">
-      <div className="max-w-7xl mx-auto px-4">
-        <ul className="flex space-x-4">
-          <li>
-            <Link href="/" className="text-white hover:text-gray-300">
-              Inicio
-            </Link>
-          </li>
-          <li>
-            <Link href="/SobreNosotros" 
-            className="text-white hover:text-gray-300">
-              Sobre Nosotros
-            </Link>
-          </li>
-          <li>
-            <Link href="/Reportes"
-            className="text-white hover:text-gray-300">
-              Reportes
-            </Link>
-          </li>
-          <li>
-            <Link href="/Cuenta/Registro" className="text-white hover:text-gray-300">
-            Registrese
-            </Link>
-          </li>
-          <li>
-            <Link href="/Cuenta/IniciarSesion" className="text-white hover:text-gray-300">
-            Iniciar Sesion
-            </Link>
-          </li>
-        </ul>
+    <div className={`navBar ${showMenu ? 'showMenu' : ''}`} id="mainNavBar">
+        <Link href="/" className="bachecito26">
+          <img
+            src="https://i.postimg.cc/T3NQg97V/Logo.png"
+            alt="Logo Bachecito 26" className='nopelien'
+          />
+          BACHECITO 26
+        </Link>
+        <div className="menuIcon" onClick={toggleMenu}>
+          <div className="menuIcon__line"></div>
+          <div className="menuIcon__line"></div>
+          <div className="menuIcon__line"></div>
+        </div>
+        <div className="menuItems">
+          <Link href="/prueba" className="opc">
+            Sobre Nosotros
+          </Link>
+          <Link href="/Reportes" className="opc">
+            Reportes
+          </Link>
+          <Link href="/" className="opc">
+            Inicio
+          </Link>
+          <Link href="/Cuenta/Registro" className="opc btn--white prueba">
+            <span>Cuenta →</span>
+          </Link>
+        </div>
       </div>
-    </nav>
   );
 }
 
+
 export default Navbar;
+
+

@@ -1,0 +1,165 @@
+/* Añadir estilos para el botón de menú hamburguesa */
+.menuIcon {
+  display: none; /* Esto ocultará el botón de hamburguesa por defecto */
+}
+
+/* Mostrar el botón de hamburguesa cuando el menú está activo */
+.navBar.showMenu .menuIcon {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.menuIcon__line {
+  width: 25px;
+  height: 3px;
+  background-color: #6f6f6f;
+  margin: 3px 0;
+}
+
+/* Ajustar la posición de las opciones del menú cuando el botón de hamburguesa está activo */
+.navBar.showMenu .menuItems {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffffde;
+  width: 100%;
+  position: absolute;
+  top: 60px; /* Ajusta esto según tu diseño */
+  left: 0;
+  z-index: 99;
+}
+
+/* Resto de tus estilos CSS... */
+
+
+.navBar {
+  background-color: #ffffffde;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.navBar a {
+  justify-content: center;
+  float: left;
+  color: #6f6f6f;
+  margin-right: 8px;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 100%;
+  font-family: 'Nunito', sans-serif;
+  text-align: center;
+  position: relative;
+  top: 5px;
+}
+
+.navBar .opc:hover {
+  color: #ff9f49;
+  transition: color 0.3s ease-in-out;
+}
+
+.navBar .opc:hover:after {
+  width: 100%;
+  left: 0;
+}
+
+.navBar a:after {
+  background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  background: #ff9f49;
+  transition: width 0.3s ease 0s, left 0.5s ease 0s;
+  width: 0;
+}
+
+.navBar .opc {
+  float: right;
+  padding-top: 1.5%;
+}
+
+
+/* Estilos específicos para el enlace "Bachecito 26" */
+.navBar .bachecito26 {
+  margin-top:5px;
+  color: #ff9f49;
+  font-weight: bolder;
+  border-radius: 5px;
+  font-size: 120%;
+  font-family: 'Alegreya Sans SC', sans-serif;
+  display: flex;
+ 
+}
+
+
+.nopelien {
+  position: relative;
+  height: 30px;
+  margin-right: 10px;
+  display: inline-block;
+  top: -7px;
+}
+
+@media (max-width: 700px) {
+  .navBar a:not(:first-child) {
+    display: none;
+  }
+
+  .navBar a.icon {
+    display: block;
+    padding-top: 4.5%;
+  }
+
+  .navBar a.show {
+    display: block;
+    clear: both;
+  }
+}
+
+@media screen and (max-height: 300px) {
+  .navBar {
+    margin-top: 40px;
+  }
+}
+
+body::-webkit-scrollbar {
+  width: 0px;
+  height: 100%;
+  background: #d0f4de;
+}
+
+.opc.btn--white {
+  background-color: #ff9f49;
+  margin-top: 5px;
+  width: 90px;
+  height: 10px;
+  border: 1px transparent;
+  color: #fff;
+  border-radius: 30px;
+  padding-bottom: 20px;
+  transition: all 0.4s;
+  text-align: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.opc.btn--white:hover {
+  background-color: #ffffff00;
+  color: #ff9f49;
+  transition: .3s;
+}
+
+.prueba {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
