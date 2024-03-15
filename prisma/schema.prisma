@@ -124,7 +124,8 @@ model Reportes {
 
   estado_reporte Estado_reporte?
 
-  alcaldia Alcaldia[]
+  alc_id Int @unique
+  alcaldia Alcaldia @relation(fields: [alc_id], references: [alc_id])
 }
 
 model Estado_reporte {
@@ -146,8 +147,9 @@ model Alcaldia {
   alc_nombre String @unique
 
   //Aqui esta la FK y viene la relacion con: Reportes
-  rep_id  Int      @unique
-  reporte Reportes @relation(fields: [rep_id], references: [rep_id])
+  reportes Reportes?
+  //rep_id  Int      @unique
+  //reporte Reportes @relation(fields: [rep_id], references: [rep_id])
 }
 
 //Este es el query para meter las alcaldias 

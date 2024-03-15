@@ -1,0 +1,64 @@
+
+.magnify-cursor {
+    position: absolute;
+    width: 40px; /* Ajusta el tamaño según sea necesario */
+    height: 40px; /* Ajusta el tamaño según sea necesario */
+    border: 10px solid #ffdd9f;
+    border-radius: 50%;
+    pointer-events: none; /* Para evitar que el cursor interfiera con los clics */
+    z-index: 90; /* Asegúrate de que esté por encima de otros elementos */
+    transform: translate(-50%, -50%);
+    background-color: transparent; /* Establecer el color de fondo transparente */
+    transition-duration: 200ms;
+    transition-timing-function: ease-out;
+    animation: cursor-animate 1500ms infinite alternate;
+  }
+
+ .magnify-cursor::after {
+    content: "";
+    width: 40px;
+    height: 40px;
+    border: 15px solid #FFD557;
+    border-radius: 50%;
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    animation: cursor-animate-2 1500ms infinite alternate;
+ }
+ 
+ /*Keyframes*/
+ @keyframes cursor-animate {
+    from {
+       transform: scale(1);
+    }
+ 
+    to {
+       transform: scale(1.5)
+    }
+ }
+ 
+ @keyframes cursor-animate-2 {
+    from {
+       transform: scale(1);
+    }
+ 
+    to {
+       transform: scale(.3);
+    }
+ }
+ 
+ @keyframes cursor-animate-3 {
+    0% {
+       transform: scale(1);
+    }
+ 
+    50% {
+       transform: scale(3);
+    }
+ 
+    100% {
+       transform: scale(1);
+       opacity: 0;
+    }
+ }
+ 
