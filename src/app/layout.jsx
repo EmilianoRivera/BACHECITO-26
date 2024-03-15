@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar";
+import Cursor from "@/components/Cursor";
 import "./globals.css";
-
 
 export const metadata = {
   title: "Bachecito 26",
@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
       <body>
         <Navbar />
         {children}
-     
+        <Cursor></Cursor>
       </body>
     </html>
   );
