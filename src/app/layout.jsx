@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar";
+import Cursor from "@/components/Cursor";
 import "./globals.css";
-
 
 export const metadata = {
   title: "Bachecito 26",

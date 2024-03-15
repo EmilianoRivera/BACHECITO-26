@@ -1,26 +1,14 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import "./cuenta.css";
-
+import { auth,db } from "../../../firebase";
+import { createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { collection, addDoc } from "firebase/firestore";
+import  "./registro.css";
 function Registro() {
   const [active, setActive] = useState(false);
-  const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false); 
+  const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
   const [canSubmit, setCanSubmit] = useState(false);
-  const [formFields, setFormFields] = useState({
-    nombre: '',
-    appat: '',
-    apmat: '',
-    fechaNacimiento: '',
-    correo: '',
-    contraseña: ''
-  });
 
-  const [fieldsFilled, setFieldsFilled] = useState(false);
-
-  const [loginFormFields, setLoginFormFields] = useState({
-    correo: '',
-    contraseña: ''
-  });
 
   const handleButtonClick = () => {
     setActive(!active);
@@ -34,10 +22,12 @@ function Registro() {
     event.preventDefault(); // Prevenir la acción por defecto del pegado del texto
   };
 
+
   const generateRandomString = () => {
     return Math.random().toString(36).substring(2, 15); //Prevenir que se autocomplete por el navegado
   };
-  
+ 
+
 
   //VALIDACIÓN NOMBRE--------------------------------------------------------------------------------------------------------------------
   const handleNameKeyDown = (event) => {
@@ -56,7 +46,7 @@ function Registro() {
     const value = event.target.value;
     // Definir el mínimo de caracteres requeridos, por ejemplo, 3 caracteres
     const minLength = 3;
-  
+ 
     // Verificar si la longitud del valor es menor que el mínimo requerido
     if (value.length < minLength) {
       alert('El nombre debe contener al menos 3 caracteres.');
@@ -65,7 +55,8 @@ function Registro() {
       setCanSubmit(true); // Se puede enviar el formulario
     }
   };
-  
+ 
+
 
 //VALIDACIÓN APELLIDOS--------------------------------------------------------------------------------------------------------------------
   const handleAPKeyDown = (event) => {
@@ -81,11 +72,11 @@ function Registro() {
     }
   };
 
+
   const handleAPBlur = (event) => {
     const value = event.target.value;
     // Definir el mínimo de caracteres requeridos, por ejemplo, 3 caracteres
     const minLength = 4;
-  
     // Verificar si la longitud del valor es menor que el mínimo requerido
     if (value.length < minLength) {
       alert('El apellido debe contener al menos 4 caracteres.');
@@ -96,13 +87,21 @@ function Registro() {
   };
 
 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [nombre, setNombre] = useState('');
+  const [appat, setAppat] = useState('');
+  const [apmat, setApmat] = useState('');
+  const [error, setError] = useState('');
 //VALIDACIÓN Fecha de nacimiento--------------------------------------------------------------------------------------------------------------------
 const [fechaNacimiento, setFechaNacimiento] = useState(""); // Estado para la fecha de nacimiento
 const [edadValida, setEdadValida] = useState(true); // Estado para la validación de edad
 
+
 const handleFechaNacimientoChange = (event) => {
   const fecha = event.target.value;
   setFechaNacimiento(fecha);
+
 
   // Validar la fecha de nacimiento
   const fechaNacimientoDate = new Date(fecha);
@@ -110,9 +109,11 @@ const handleFechaNacimientoChange = (event) => {
   let edad = hoy.getFullYear() - fechaNacimientoDate.getFullYear();
   const mes = hoy.getMonth() - fechaNacimientoDate.getMonth();
 
+
   if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNacimientoDate.getDate())) {
     edad = edad - 1; // Decrementar la edad si no ha pasado el mes de cumpleaños
   }
+
 
   if (edad < 18 || edad > 70) {
     setEdadValida(false);
@@ -121,28 +122,19 @@ const handleFechaNacimientoChange = (event) => {
   }
 };
 
+
 // Agrega una función de manejo para el cambio de estado del checkbox
 const handleCheckBoxChange = () => {
   setCheckBoxChecked(!checkBoxChecked);
 };
 
-useEffect(() => {
-  // Verificar si los campos de registro están llenos
-  const registrationFormValues = Object.values(formFields);
-  const registrationFormFilled = registrationFormValues.every(value => value !== '');
-  setFieldsFilled(registrationFormFilled);
-}, [formFields]);
 
-const handleInputChange = (event, field) => {
-  const { value } = event.target;
-  setFormFields(prevState => ({
-    ...prevState,
-    [field]: value
-  }));
-};
+
+
 
 const handleSubmit = (event) => {
-  event.preventDefault(); // Evitar el envío automático del formulario
+//  event.preventDefault(); // Evitar el envío automático del formulario
+
 
   if (!edadValida) {
     alert('Lo sentimos, debes tener entre 18 y 70 años para registrarte.');
@@ -153,8 +145,11 @@ const handleSubmit = (event) => {
     return; // No se envía el formulario si el checkbox no está marcado
   }
 
+
   // Aquí puedes enviar el formulario
 };
+
+
 
 
 //VALIDACIÓN Correo--------------------------------------------------------------------------------------------------------------------
@@ -171,10 +166,12 @@ const handleMailKeyDown = (event) => {
   }
 };
 
+
 const handleMailBlur = (event) => {
   const value = event.target.value;
   // Definir el mínimo de caracteres requeridos, por ejemplo, 3 caracteres
   const minLength = 10;
+
 
   // Verificar si la longitud del valor es menor que el mínimo requerido
   if (value.length < minLength) {
@@ -184,6 +181,8 @@ const handleMailBlur = (event) => {
     setCanSubmit(true); // Se puede enviar el formulario
   }
 };
+
+
 
 
 //VALIDACIÓN Contraseña--------------------------------------------------------------------------------------------------------------------
@@ -200,10 +199,12 @@ const handlePassKeyDown = (event) => {
   }
 };
 
+
 const handlePassBlur = (event) => {
   const value = event.target.value;
   // Definir el mínimo de caracteres requeridos, por ejemplo, 3 caracteres
   const minLength = 8;
+
 
   // Verificar si la longitud del valor es menor que el mínimo requerido
   if (value.length < minLength) {
@@ -217,37 +218,95 @@ const handlePassBlur = (event) => {
 
 
 
+
+
+
+
 //VALIDACIÓN Checkbox--------------------------------------------------------------------------------------------------------------------
 const [checkBoxChecked, setCheckBoxChecked] = useState(false);
 
+
+const handleSignUp = async (event) => {
+  // Crear la cuenta delusuario con email y contraseña
+  try {
+  event.preventDefault();
+  const userCredential= await createUserWithEmailAndPassword(auth, email, password)
+  const user = userCredential.user;
+ 
+      // Correo de verificación
+      sendEmailVerification(user)
+      alert('ola se envio correo');
+      const uid = user.uid;
+      const usuariosCollection = collection(db, 'usuarios');
+      const nuevoUsuario = {
+        uid: uid,
+        nombre: nombre,
+        apellidoPaterno: appat,
+        apellidoMaterno: apmat,
+        fechaNacimiento: fechaNacimiento,
+        correo: email,
+      };
+      addDoc(usuariosCollection, nuevoUsuario)
+      alert('SE GUARDO SI OLA')
+           
+  }catch(error) {
+      console.error('Error al crear la cuenta: ', error);
+      alert(error.message);
+    }
+};
+
+
+
+const handleSignIn = async (event) => {
+  event.preventDefault();
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    // Verificar si el correo electrónico está verificado
+    if (user && !user.emailVerified) {
+      alert("Por favor, verifica tu correo electrónico para iniciar sesión.");
+      signOut(auth)
+    } else {
+      // Aquí puedes realizar acciones adicionales después del inicio de sesión exitoso
+      alert('Inicio de sesión exitoso');
+      console.log('Usuario inició sesión con éxito:', user);
+    }
+  } catch (error) {
+    setError(error.message);
+  }
+};
+
   return (
+
 
   <div className='body'>
 
+
     <div className={`container ${active ? "active" : ""}`} id="container">
       <div className="form-container sign-up">
-        <form id="form-registro" onSubmit={handleSubmit}>
+        <form id="form-registro" onSubmit={handleSignUp}>
           <h1 className='title' id="regis-title" >¡QUE FELICIDAD QUE TE NOS UNAS!</h1>
-          <input type="text" className="datos" placeholder='Nombre(s)' onBlur={handleNameBlur} onKeyDown={handleNameKeyDown} minLength={3} onPaste={handlePaste} autoComplete={generateRandomString()}/>
+          <input type="text" className="datos" placeholder='Nombre(s)' onBlur={handleNameBlur} onKeyDown={handleNameKeyDown} minLength={3} onPaste={handlePaste} autoComplete={generateRandomString()} value={nombre} onChange={(e) => setNombre(e.target.value)} required/>
           <div className="apellidos-container">
-            <input type="text" className="datos" id="appat" onBlur={handleAPBlur} onKeyDown={handleAPKeyDown} minLength={4} placeholder='Apellido Paterno' onPaste={handlePaste} autoComplete={generateRandomString()}/>
-            <input type="text" className="datos" id="apmat" onBlur={handleAPBlur} onKeyDown={handleAPKeyDown} minLength={4} placeholder='Apellido Materno' onPaste={handlePaste} autoComplete={generateRandomString()}/>
+            <input type="text" className="datos" id="appat" onBlur={handleAPBlur} onKeyDown={handleAPKeyDown} minLength={4} placeholder='Apellido Paterno' onPaste={handlePaste} autoComplete={generateRandomString()} value={appat} onChange={(e) => setAppat(e.target.value)} required/>
+            <input type="text" className="datos" id="apmat" onBlur={handleAPBlur} onKeyDown={handleAPKeyDown} minLength={4} placeholder='Apellido Materno' onPaste={handlePaste} autoComplete={generateRandomString()} value={apmat} onChange={(e) => setApmat(e.target.value)} required/>
           </div>
-          <input type="date" className="datos" placeholder='Fecha de Nacimiento' onChange={handleFechaNacimientoChange} />
-          <input type="email" className="datos" placeholder='Correo Electrónico' onBlur={handleMailBlur} onKeyDown={handleMailKeyDown} minLength={10} onPaste={handlePaste} autoComplete={generateRandomString()}/>
-          <input type="password" className="datos" placeholder='Contraseña' onBlur={handlePassBlur} onKeyDown={handlePassKeyDown} minLength={8}/>
+          <input type="date" className="datos" placeholder='Fecha de Nacimiento' onChange={handleFechaNacimientoChange} value={fechaNacimiento} required />
+          <input type="email" className="datos" placeholder='Correo Electrónico' onBlur={handleMailBlur} onKeyDown={handleMailKeyDown} minLength={10} onPaste={handlePaste} autoComplete={generateRandomString()} value={email} onChange={(e) => setEmail(e.target.value)} required/>
+          <input type="password" className="datos" placeholder='Contraseña' onBlur={handlePassBlur} onKeyDown={handlePassKeyDown} minLength={8} value={password} onChange={(e) => setPassword(e.target.value)} required/>
           <div className="checkbox-container">
             <input type="checkbox" id="checkbox-pri" name="aceptar"  onChange={handleCheckBoxChange} />
             <p id="a-pri">He leído y acepto la <a href="#" id="a-pol" onClick={handlePrivacyPolicyClick}>Política de Privacidad</a>😉</p>
           </div>
-          <button type="submit" id="registrarse-btn" >Registrarse</button>
+          <button  id="registrarse-btn" >Registrarse</button>
         </form>
       </div>
       <div className="form-container sign-in">
-        <form id="form-inicar-sesion">
+        <form id="form-inicar-sesion" onSubmit={handleSignIn}>
           <h1 className='title' id="ini-title">¡QUE BUENO ES TENERTE DE VUELTA!</h1>
-          <input type="email" className="datos" placeholder='Correo Electrónico' onBlur={handleMailBlur} onKeyDown={handleMailKeyDown} minLength={10} onPaste={handlePaste} autoComplete={generateRandomString()}/>
-          <input type="password" className="datos" placeholder='Contraseña' onBlur={handlePassBlur} onKeyDown={handlePassKeyDown} minLength={8} onPaste={handlePaste} autoComplete={generateRandomString()}/>
+          <input type="email" className="datos" placeholder='Correo Electrónico' onBlur={handleMailBlur} onKeyDown={handleMailKeyDown} minLength={10} onPaste={handlePaste} autoComplete={generateRandomString()} value={email} onChange={(e) => setEmail(e.target.value)} required/>
+          <input type="password" className="datos" placeholder='Contraseña' onBlur={handlePassBlur} onKeyDown={handlePassKeyDown} minLength={8} onPaste={handlePaste} autoComplete={generateRandomString()} value={password} onChange={(e) => setPassword(e.target.value)} required/>
           <a id="olvi-contra" href="#">¿Olvidaste tu contraseña? 😰</a>
           <button id="iniciarSesion-btn">Iniciar Sesión</button>
         </form>
@@ -267,6 +326,7 @@ const [checkBoxChecked, setCheckBoxChecked] = useState(false);
         </div>
       </div>
 
+
       {/* Pantalla de política de privacidad */}
       {showPrivacyPolicy && (
         <div className="privacy-policy">
@@ -277,9 +337,11 @@ const [checkBoxChecked, setCheckBoxChecked] = useState(false);
         </div>
       )}
 
+
     </div>
-  </div> 
+  </div>
   );
 }
+
 
 export default Registro;
