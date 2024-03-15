@@ -1,7 +1,8 @@
-//aqui es la Landing Page
+import React from 'react'
+
 function HomePage() {
   return (
-    <div>Esta es la Landing PAGE</div>
+    <div>HomePage</div>
   )
 }
 

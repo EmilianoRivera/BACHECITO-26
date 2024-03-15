@@ -1,6 +1,8 @@
+import React from 'react'
+
 function SobreNosotros() {
   return (
-    <div>ESTA ES LA PAGINA SOBRE NOSOTROS - SUBIO CAMBIO MELY</div>
+    <div>SobreNosotros</div>
   )
 }
 
