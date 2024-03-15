@@ -1,4 +1,4 @@
-//Aqui se tienen que hacer el despliegue de los reportes
+
 "use client";
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
