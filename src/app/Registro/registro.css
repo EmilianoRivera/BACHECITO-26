@@ -1,0 +1,430 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400..800&family=Nunito:ital,wght@0,200..1000;1,200..1000&display =intercambiar');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+
+.container{
+    background-color: #F1F1F1;
+    border-radius: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    width: 768px;
+    max-width: 100%;
+    min-height: 480px;
+    position: relative;
+}
+
+.container .title{
+    color: #6F6F6F;
+    font-size: 20px;
+    text-align: center;
+    font-family: "Nunito", sans-serif;
+    font-weight: 800;
+}
+
+.container #ini-title{
+    position: absolute;
+    top: 20%;
+    width: 75%;
+}
+
+.container .title-2{
+    color: #6F6F6F;
+    font-size: 32px;
+    text-align: center;
+    font-weight: 900;
+    font-family: "Nunito", sans-serif;
+}
+
+.container p{
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.3px;
+    margin: 20px 0;
+}
+
+.container .p-advertencia{
+    font-size: 16px;
+    font-weight: 800;
+    font-family: "Nunito", sans-serif;
+}
+
+.container span{
+    font-size: 12px;
+}
+
+.container a{
+    color: #333;
+    font-size: 13px;
+    text-decoration: none;
+    margin: 15px 0 10px;
+}
+
+.container #olvi-contra{
+    color: #525252;
+    font-size: 13px;
+    text-decoration: none;
+    margin: 15px 0 10px;
+    position: absolute; 
+    left: 10%;
+    top: 58.5%;
+}
+
+.container #olvi-contra:hover{
+    color: #FF4D35;
+    transition: color 0.5s ease; /* Transición suave */
+
+}
+
+.container button{
+    background-color: #ff9f49;
+    color: #fff;
+    font-size: 12px;
+    padding: 10px 45px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.container #registrarse-btn{
+    background-color: #6F6F6F;
+    color: #fff;
+    font-size: 15px;
+    font-family: "Baloo Thambi 2", system-ui;
+    padding: 7.5px 45px;
+    border: 1px solid transparent;
+    border-radius: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-top: 25px;
+    cursor: pointer;
+}
+
+.container #iniciarSesion-btn{
+    background-color: #6F6F6F;
+    color: #fff;
+    position: absolute;
+    font-size: 15px;
+    font-family: "Baloo Thambi 2", system-ui;
+    padding: 7.5px 45px;
+    border: 1px solid transparent;
+    border-radius: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    top: 70%;
+    cursor: pointer;
+
+}
+
+.container .cuentita{
+    background-color: #FFC537;
+    border-radius: 15px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: "Baloo Thambi 2", system-ui;
+    padding: 6px 45px;
+
+}
+
+.container form{
+    background-color: #F1F1F1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 40px;
+    height: 100%;
+}
+
+#form-registro{
+    top: 10%;
+}
+
+.container .datos{
+    background-color: #FFF;
+    border: none;
+    margin: 8px 0;
+    padding: 10px 15px;
+    font-size: 13px;
+    border-radius: 8px;
+    width: 100%;
+    outline: auto;
+    outline-color: #FFF;
+    color: #949494;
+    transition: outline 0.5s ease;
+}
+
+.container .datos:hover { /* Cambia el color del texto al pasar el mouse */
+    outline-color: #FF9F49;
+    border-color: #ff9f49; /* Agrega un borde naranja al pasar el mouse */
+}
+
+.container .datos::placeholder {
+    color: #949494; /* Color del placeholder predeterminado */
+    transition: color 0.5s ease; /* Transición suave */
+}
+
+.container .datos:hover::placeholder {
+    color: #ff9f49; /* Cambia el color del placeholder al pasar el mouse */
+}
+
+
+.input-container {
+    display: inline-block;
+    align-content: left;
+    margin-right: 10px;
+    width: 50%; /* Ajusta el margen entre los campos de entrada de los apellidos */
+  }
+
+.form-container{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: all 0.6s ease-in-out;
+}
+
+.sign-in{
+    left: 0;
+    width: 50%;
+    z-index: 2;
+    background-color: #F1F1F1;
+}
+
+.container.active .sign-in{
+    transform: translateX(100%);
+}
+
+.sign-up{
+    left: 0;
+    width: 50%;
+    opacity: 0;
+    z-index: 1;
+    background-color: #F1F1F1;
+}
+
+.container.active .sign-up{
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 5;
+    animation: move 0.6s;
+}
+
+@keyframes move{
+    0%, 49.99%{
+        opacity: 0;
+        z-index: 1;
+    }
+    50%, 100%{
+        opacity: 1;
+        z-index: 5;
+    }
+}
+
+.social-icons{
+    margin: 20px 0;
+}
+
+.social-icons a{
+    border: 1px solid #ccc;
+    border-radius: 20%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 3px;
+    width: 40px;
+    height: 40px;
+}
+
+.toggle-container{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: all 0.6s ease-in-out;
+    z-index: 1000;
+}
+
+.container.active .toggle-container{
+    transform: translateX(-100%);
+}
+
+.toggle{
+    background-image: url("https://i.postimg.cc/0ydmx6Dh/carro-inicio-Sesion.png");
+    background-size:cover; /* Ajusta la imagen para cubrir todo el contenedor */
+    background-position: left;
+    height: 100%;
+    color: #fff;
+    position: relative;
+    left: -100%;
+    height: 100%;
+    width: 200%;
+    transform: translateX(0);
+    transition: all 0.6s ease-in-out;
+    top:0;
+}
+
+.container.active .toggle{
+    transform: translateX(50%);
+}
+
+.toggle-panel{
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 30px;
+    text-align: center;
+    top: 0;
+    transform: translateX(0);
+    transition: all 0.6s ease-in-out;
+}
+
+.toggle-left{
+    transform: translateX(-200%);
+}
+
+.container.active .toggle-left{
+    transform: translateX(0);
+}
+
+.toggle-right{
+    right: 0;
+    transform: translateX(0);
+}
+
+.container.active .toggle-right{
+    transform: translateX(200%);
+}
+
+.apellidos-container {
+    display: flex; /* Hace que los elementos hijos se muestren en línea */
+  }
+
+  .apellidos-container #apmat, #appat {
+    flex: 1; /* Permite que los campos de entrada de los apellidos se expandan para llenar el espacio disponible */
+    margin-right: 20px; /* Ajusta el margen entre los campos de entrada de los apellidos */
+  }
+
+  .apellidos-container #apmat, #appat:last-child {
+    margin-right: 0; /* Elimina el margen derecho del último campo de entrada de los apellidos */
+  }
+
+
+
+/* Estilos personalizados para el checkbox */
+input[type="checkbox"] {
+    /* Oculta el checkbox predeterminado */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    /* Define un tamaño para el nuevo checkbox */
+    width: 16px;
+    height: 16px;
+    /* Agrega espacio para el contenido del checkbox */
+    padding: 0;
+    /* Establece el cursor al pasar sobre el checkbox */
+    cursor: pointer;
+    /* Agrega un borde */
+    border: 2px solid #949494; /* Borde predeterminado */
+    border-radius: 5px;
+    position: absolute; 
+    left: 10.5%;
+    top: 78.35%;
+}
+
+/* Estilo para el checkbox cuando está marcado */
+input[type="checkbox"]:checked {
+    background-color: #FF9F49; /* Cambia el color de fondo cuando está marcado */
+    border-color: #FF9F49; /* Cambia el color del borde cuando está marcado */
+}
+
+/* Estilo para el icono de la palomita */
+input[type="checkbox"]:checked::before {
+    content: '✓'; /* Agrega el icono de la palomita */
+    font-size: 16px; /* Tamaño del icono */
+    color: #fff; /* Color del icono */
+    position: absolute; /* Posiciona el icono encima del checkbox */
+    top: 50%; /* Alinea verticalmente al centro */
+    left: 50%; /* Alinea horizontalmente al centro */
+    transform: translate(-50%, -50%); /* Centra el icono */
+    line-height: 1; /* Ajusta la altura de línea */
+}
+
+.checkbox-container {
+    display: flex;
+    margin-top: 10px; /* Ajusta el margen entre los campos de entrada y el checkbox */
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-right: 5px; /* Ajusta el margen entre el checkbox y el texto */
+}
+
+#a-pol {
+    color: #ff9f49;
+    font-size: 13.5px;
+}
+
+#a-pri{
+    position: absolute;
+    color: #525252;
+    top: 73.7%;
+    left: 16.5%;
+}
+
+.privacy-policy {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center; /* Centra verticalmente */
+    justify-content: center; /* Centra horizontalmente */
+  }
+
+  .privacy-policy-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    max-width: 80%;
+    max-height: 80%;
+    overflow-y: auto;
+  }
+
+  .privacy-policy button {
+    background-color: #ff9f49;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  
