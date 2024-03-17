@@ -1,3 +1,4 @@
+
 "use client"
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
@@ -216,4 +217,5 @@ return (
         <p>Nombre de usuario: {data.nombre_Usuario}</p>
     </div>
 ); */
+
 
