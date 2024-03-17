@@ -1,1 +1,0 @@
-//Aqui vamos a ir desarrollando los requisitos por parte del cliente, por lo que aqui, vamos a usar el id del usuario
