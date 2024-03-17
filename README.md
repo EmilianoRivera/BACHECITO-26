@@ -1,10 +1,6 @@
 <h1>Bienvenido!</h1>
 Somos el equipo de bachecito 26, bienvenido a nuestro repositorio, aquí encontraras el código fuente de nuestro proyecto web.
-<h2>Dependencias</h2>
-Lista de paquetes de npm:
-<ul>
-  <li> Aqui van los paquetes</li>
-</ul>
+
 
 
 <hr />
